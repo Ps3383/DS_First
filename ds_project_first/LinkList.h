@@ -43,7 +43,6 @@ public:
     void display();
     int  size_of_list() const;
 };
-#include "LinkList.h"
 
 template <typename T>
 bool LinkedList<T>::empty()const {

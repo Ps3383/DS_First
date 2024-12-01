@@ -1,10 +1,12 @@
 #include "Singer.h"
-int Singer::number_s = 1;
+
+
+int Singer::number_singer = -199;
 
 Singer::Singer(string name) {
 	Name = name;
-	ID = number_s;
-	this->number_s += 2;
+	ID = number_singer;
+	this->number_singer += 2;
 }
 
 

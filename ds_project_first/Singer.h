@@ -10,7 +10,7 @@ private:
 	string Name;
 	int ID;
 	LinkedList<Song> songs;
-	static int number_s;
+	static int number_singer;
 
 public:
 	Singer(string name = "");
