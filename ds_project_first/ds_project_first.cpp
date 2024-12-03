@@ -24,7 +24,7 @@ int main()
 			cout << "Enter name of the singer : ";
 			string name;
 			cin >> name;
-			Singer singer1(name);
+			Singer *singer1 = new Singer(name);
 			set.insert(singer1);
 		}
 		else if (n == 2) {

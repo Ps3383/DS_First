@@ -13,7 +13,8 @@ private:
 	static int number_singer;
 
 public:
-	Singer(string name = "");
+	Singer(string name);
+	//Singer(string name = "5");
 	string get_name();
 	int get_id();
 	LinkedList<Song>& get_songs();
