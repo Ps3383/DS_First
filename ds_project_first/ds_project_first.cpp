@@ -83,7 +83,7 @@ int main()
 			set.find_amusic_print(singers, count_singers, name_music);
 		}
 		else if (n == 8) {
-			break;
+			int n;
 		}
 		else if (n == 9) {
 			break;
