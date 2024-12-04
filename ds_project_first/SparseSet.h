@@ -24,6 +24,7 @@ public:
     void clear();
     Singer* find_singer_byname(Singer * singers[] , int numbers , string name);
     void find_amusic_print(Singer * singers[] ,int numbers ,string name);
+    void delete_music(Singer* singers[], int numbers, int id);
 };
 
 

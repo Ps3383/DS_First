@@ -83,7 +83,10 @@ int main()
 			set.find_amusic_print(singers, count_singers, name_music);
 		}
 		else if (n == 8) {
-			int n;
+			int id_music ,id_singer;
+			cout << "Enter ID of Music you want to delete(by space) : ";
+			cin >> id_music >> id_singer;
+			set.delete_music(singers, count_singers, id_music);
 		}
 		else if (n == 9) {
 			break;

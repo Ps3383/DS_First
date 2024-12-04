@@ -41,6 +41,7 @@ public:
     void push_back(const T& e);
     void pop_front();
     void pop_back();
+    void erase_index(int h) const;
     void display();
     int  size_of_list() const;
 };
@@ -78,8 +79,29 @@ const T& LinkedList<T>::index(int h) const {
         for (int k = 0; k < h; ++k) {
             temp = temp->next;
         }
-        return temp->data;
-   
+        return temp->data; 
+}
+
+template <typename T>
+void LinkedList<T>::erase_index(int key) const {
+
+    Node <T>* curr = head;
+    int g = key - 1;
+    while (g > 0) {
+        curr = curr->next;
+        --g;
+    }
+
+    if (curr == nullptr || curr->next == nullptr)
+        return;
+
+    Node <T>* nodeDelete = curr->next;
+    curr->next = nodeDelete->next;
+
+    if (nodeDelete->next != nullptr) {
+        nodeDelete->next->pre = curr;
+    }
+    delete nodeDelete;
 }
 
 template <typename T>

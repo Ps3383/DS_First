@@ -114,3 +114,19 @@ void SparseSet::find_amusic_print(Singer* singers[], int numbers ,string name) {
     }
     cout << "no found\n\n";
 }
+
+void SparseSet::delete_music(Singer* singers[], int numbers, int id) {
+    for (int i = 0; i < numbers; ++i) {
+        LinkedList<Song> l = singers[i]->get_songs();
+        for (int j = 0; j < l.size_of_list(); ++j) {
+            Song s = l.index(j);
+            if (s.get_id() == id) {
+                l.erase_index(j);
+                cout << "Music with ID = " << id << " has been deleted\n\n";
+                l.display();
+                return;
+            }
+        }
+    }
+    cout << "Music with ID = "<< id <<" does not exist"<<endl<<endl;
+}
