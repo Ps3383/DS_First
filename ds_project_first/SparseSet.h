@@ -22,7 +22,8 @@ public:
     void print_all_singers() const;
     void find_singer_print_info(int id) const;
     void clear();
-
+    Singer* find_singer_byname(Singer * singers[] , int numbers , string name);
+    void find_amusic_print(Singer * singers[] ,int numbers ,string name);
 };
 
 

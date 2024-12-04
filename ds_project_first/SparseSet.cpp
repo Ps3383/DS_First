@@ -88,3 +88,29 @@ void SparseSet::clear() {
     n = 0;
     cout << "everything was deleted ! \n\n";
 }
+
+Singer* SparseSet::find_singer_byname(Singer* singers[], int numbers, string name) {
+    for (int i = 0; i < numbers; ++i) {
+        if (singers[i]->get_name() == name) {
+            return singers[i];
+        }
+    }
+    cout << "Singer with name = "<<name<<" does not exist ! \n";
+    cout << "Unsuccessful to add this Music ):\n\n";
+    return nullptr;
+}
+
+void SparseSet::find_amusic_print(Singer* singers[], int numbers ,string name) {
+    for (int i = 0; i < numbers; ++i) {
+        LinkedList<Song> l = singers[i]->get_songs();
+        for (int j = 0; j < l.size_of_list(); ++j) {
+            Song s =  l.index(j);
+            if (s.get_name() == name) {
+                cout << s;
+                puts("\n");
+                return;
+            }
+        }
+    }
+    cout << "no found\n\n";
+}

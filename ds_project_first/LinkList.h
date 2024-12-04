@@ -36,6 +36,7 @@ public:
     bool empty() const;
     const T& front() const;
     const T& back() const;
+    const T& index(int h)const;
     void push_front(const T& e);
     void push_back(const T& e);
     void pop_front();
@@ -66,6 +67,19 @@ const T& LinkedList<T>::back() const {
         throw ListEmpty("empty list!");
     }
     return tail->data;
+}
+
+template <typename T>
+const T& LinkedList<T>::index(int h) const {
+    if (empty()) {
+        throw ListEmpty("empty list!");
+    } 
+        Node<T>* temp = head;
+        for (int k = 0; k < h; ++k) {
+            temp = temp->next;
+        }
+        return temp->data;
+   
 }
 
 template <typename T>

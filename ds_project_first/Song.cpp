@@ -1,14 +1,20 @@
 ﻿#include "Song.h"
+
+
+int Song:: number_so = 0;
+
+
 Song::~Song() {
 	// در صورتی که نیاز به انجام کار خاصی باشد، اینجا می‌توانید کد بنویسید.
 	// به عنوان مثال اگر منابعی به صورت پویا تخصیص داده شده باشد، می‌توانید آن‌ها را آزاد کنید.
 }
 
-Song::Song(string name, int id, int year, string text) {
+Song::Song(string name, int year, string text) {
 	Name = name;
-	ID = id;
+	ID = number_so;
 	Year = year;
 	Text = text;
+	number_so += 2;
 }
 
 string Song::get_name() {
