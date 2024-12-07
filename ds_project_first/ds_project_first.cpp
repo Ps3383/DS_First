@@ -31,9 +31,7 @@ int main()
 			cout << "Enter name of the singer : ";
 			string name;
 			cin >> name;
-			//Singer *singer1 = new Singer(name);
 			singers[count_singers] = new Singer(name);
-			//set.insert(singer1);
 			set.insert(singers[count_singers]);
 			++count_singers;
 		}
@@ -69,10 +67,10 @@ int main()
 			cin >> text_s;
 			cout << "Enter Artist of the song : ";
 			cin >> artist;
-			Singer * g = set.find_singer_byname(singers, count_singers, artist);
-			if (g != nullptr) {
+			Singer * si = set.find_singer_byname(singers, count_singers, artist);
+			if (si != nullptr) {
 				Song song(music_name, year, text_s);
-				g->get_songs().push_back(song);
+				si->get_songs().push_back((song));
 				cout << "Song successfully added (:\n\n";
 			}
 		}
@@ -83,10 +81,15 @@ int main()
 			set.find_amusic_print(singers, count_singers, name_music);
 		}
 		else if (n == 8) {
-			int id_music ,id_singer;
-			cout << "Enter ID of Music you want to delete(by space) : ";
-			cin >> id_music >> id_singer;
-			set.delete_music(singers, count_singers, id_music);
+			try {
+				int id_music, id_singer;
+				cout << "Enter ID of Music you want to delete(by space) : ";
+				cin >> id_music >> id_singer;
+				set.delete_music(singers, count_singers, id_music);
+			}
+			catch (...) {
+				cout << "error";
+			}
 		}
 		else if (n == 9) {
 			break;

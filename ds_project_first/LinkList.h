@@ -36,12 +36,12 @@ public:
     bool empty() const;
     const T& front() const;
     const T& back() const;
-    const T& index(int h)const;
+    T& index(int h)const;
     void push_front(const T& e);
     void push_back(const T& e);
     void pop_front();
     void pop_back();
-    void erase_index(int h) const;
+    void erase_index(int h);
     void display();
     int  size_of_list() const;
 };
@@ -71,7 +71,7 @@ const T& LinkedList<T>::back() const {
 }
 
 template <typename T>
-const T& LinkedList<T>::index(int h) const {
+ T& LinkedList<T>::index(int h) const {
     if (empty()) {
         throw ListEmpty("empty list!");
     } 
@@ -83,25 +83,25 @@ const T& LinkedList<T>::index(int h) const {
 }
 
 template <typename T>
-void LinkedList<T>::erase_index(int key) const {
-
-    Node <T>* curr = head;
-    int g = key - 1;
-    while (g > 0) {
-        curr = curr->next;
-        --g;
+void LinkedList<T>::erase_index(int pos) {
+    if (pos < 0 || pos >= size_of_list()) {
+        throw out_of_range("Index out of bounds");
     }
-
-    if (curr == nullptr || curr->next == nullptr)
+    Node<T>* temp = head;
+    if (pos == 0) {
+        pop_front();
         return;
-
-    Node <T>* nodeDelete = curr->next;
-    curr->next = nodeDelete->next;
-
-    if (nodeDelete->next != nullptr) {
-        nodeDelete->next->pre = curr;
     }
-    delete nodeDelete;
+    for (int i = 0; i < pos; ++i) {
+        temp = temp->next;
+    }
+    if (temp == tail) {
+        pop_back();
+        return;
+    }
+    temp->pre->next = temp->next;
+    temp->next->pre = temp->pre;
+    delete temp;
 }
 
 template <typename T>
@@ -136,7 +136,7 @@ void LinkedList<T>::push_front(const T& e) {
 
 template <typename T>
 void LinkedList<T>::push_back(const T& e) {
-    Node<T>* newnode = new Node<T>(e);
+    Node<T>* newnode = new Node<T>((e));
     if (empty()) {
         head = newnode;
         tail = newnode;
