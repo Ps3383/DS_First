@@ -10,11 +10,17 @@ Song::~Song() {
 
 Song::Song(string name, int year, string text) {
 	Name = name;
-	ID = number_so;
+	if (year == -1) {
+		ID = -12532551; 
+	}
+	else {
+		ID = number_so;	
+		number_so += 2;
+	}
 	Year = year;
 	Text = text;
-	number_so += 1;
 }
+
 
 string Song::get_name() {
 	return this->Name;

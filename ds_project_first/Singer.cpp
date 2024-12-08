@@ -9,12 +9,6 @@ Singer::Singer(string name) {
 	this->number_singer += 2;
 }
 
-//Singer::Singer(string name ) {
-//	//Name = name;
-//	//ID = number_singer;
-//	//this->number_singer += 2;
-//}
-
 
 int Singer::get_id() {
 	return this->ID;

@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClCompile Include="ds_project_first.cpp" />
     <ClCompile Include="LinkList.cpp" />
+    <ClCompile Include="PlayList.cpp" />
     <ClCompile Include="Singer.cpp" />
     <ClCompile Include="Song.cpp" />
     <ClCompile Include="SparseSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkList.h" />
+    <ClInclude Include="PlayList.h" />
     <ClInclude Include="Singer.h" />
     <ClInclude Include="Song.h" />
     <ClInclude Include="SparseSet.h" />

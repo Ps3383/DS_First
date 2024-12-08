@@ -2,14 +2,19 @@
 #include"LinkList.h"
 #include"Singer.h"
 #include"Song.h"
+#include"PlayList.h"
 #include"SparseSet.h"
 using namespace std;
 
 int main()
 {
-	SparseSet set(100, 100);
+	SparseSet<Singer> set(100, 100);  // max id    capa
+	SparseSet<PlayList> set_play(2000, 2000);
+	
 	Singer* singers[100];
+	PlayList* playlists[100];
 	int count_singers = 0;
+	int count_playlists = 0;
 
 	while (true)
 	{
@@ -21,6 +26,10 @@ int main()
 		cout << "Press 6 to add new Music \n";
 		cout << "Press 7 to find a Music and print its information\n";
 		cout << "Press 8 to delete a Music \n";
+		cout << "Press 9 to build a PlayList \n";
+		cout << "Press 10 to add a Music to PlayList \n";
+		cout << "Press 11 to show All PlayLists information \n";
+		cout << "Press 12 to find a PlayList and print its information \n";
 
 
 		cout << "Press 50 to exit\n";
@@ -33,6 +42,8 @@ int main()
 			cin >> name;
 			singers[count_singers] = new Singer(name);
 			set.insert(singers[count_singers]);
+			cout << "Singer successfully added !\n";
+			puts("");
 			++count_singers;
 		}
 		else if (n == 2) {
@@ -92,7 +103,40 @@ int main()
 			}
 		}
 		else if (n == 9) {
-			break;
+			cout << "Enter name of the PlayList : ";
+			string name;
+			cin >> name;
+			playlists[count_playlists] = new PlayList(name);
+			set_play.insert(playlists[count_playlists]);
+			cout << "PlayList successfully added !\n";
+			puts("");
+			++count_playlists;
+		}
+		else if (n == 10) {
+			int id_music;
+			int id_playlist;
+			cout << "Enter ID of music : ";
+			cin >> id_music;
+			cout << "Enter ID of PlayList : ";
+			cin >> id_playlist;
+			Song so = set.findAmusic_forAddtoPlaylist(singers, count_singers, id_music);
+			PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_playlist);
+			if (pl != nullptr && so.get_name()!= "null") {
+				pl->get_songs().push_back(so);
+				cout << "Song successfully added (:\n\n";
+			}
+		}
+		else if (n == 11) {
+			set_play.print_all_playlists();
+		}
+		else if (n == 12) {
+			int id_pl;
+			cout << "Enter ID of PlayList : ";
+			cin >> id_pl;
+			PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_pl);
+			if (pl != nullptr) {
+				set_play.find_playlist_print_info(id_pl);
+			}
 		}
 		else if (n == 50) {
 			break;

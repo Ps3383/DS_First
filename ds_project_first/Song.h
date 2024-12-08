@@ -11,7 +11,7 @@ private:
 	string Text;
 	static int number_so;
 public:
-	Song(string name = "", int year = -1, string text = "");
+	Song(string name = "", int year = -1, string text = "" );
 	~Song();
 	int get_year();
 	int get_id();
