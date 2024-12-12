@@ -33,6 +33,9 @@
     <ClCompile Include="PlayList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="myQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkList.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

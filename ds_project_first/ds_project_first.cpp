@@ -4,12 +4,14 @@
 #include"Song.h"
 #include"PlayList.h"
 #include"SparseSet.h"
+#include"myQueue.h"
 using namespace std;
 
 int main()
 {
 	SparseSet<Singer> set(100, 100);  // max id    capa
 	SparseSet<PlayList> set_play(2000, 2000);
+	myQueue<PlayList> queue(100);    // capa
 	
 	Singer* singers[100];
 	PlayList* playlists[100];
@@ -30,7 +32,11 @@ int main()
 		cout << "Press 10 to add a Music to PlayList \n";
 		cout << "Press 11 to show All PlayLists information \n";
 		cout << "Press 12 to find a PlayList and print its information \n";
-
+		cout << "Press 13 to find a Music in Playlist \n";
+		cout << "Press 14 to delete a Music from Playlist \n";
+		cout << "Press 15 to add a Playlist to Queue (Enqueue) \n";
+		cout << "Press 16 to delete a Playlist from Queue (Dequeue) \n";
+		cout << "Press 17 to see Elements in Queue \n";
 
 		cout << "Press 50 to exit\n";
 
@@ -50,7 +56,12 @@ int main()
 			int del_id = -1;
 			cout << "Enter ID of singer that you want to delete : ";
 			cin >> del_id;
-			set.erase(del_id);
+			/*try {*/
+				set.erase(singers, del_id);
+			/*}*/
+	/*		catch (...) {
+				cout << "ridid\n\n\n";
+			}*/
 		}
 		else if (n == 3) {
 			int show_id = -1;
@@ -64,6 +75,7 @@ int main()
 		}
 		else if (n == 5) {
 			set.clear();
+			set_play.clear();
 		}
 		else if (n == 6) {
 			string music_name;
@@ -94,12 +106,15 @@ int main()
 		else if (n == 8) {
 			try {
 				int id_music, id_singer;
-				cout << "Enter ID of Music you want to delete(by space) : ";
-				cin >> id_music >> id_singer;
-				set.delete_music(singers, count_singers, id_music);
+				cout << "Enter ID of Music : ";
+				cin >> id_music;
+				cout << "Enter ID of Singer : ";
+				cin >> id_singer;
+				set.delete_music(singers, count_singers, id_music, id_singer);	
+				set_play.delete_musicFrom_ALLplay(playlists, count_playlists, id_music);
 			}
 			catch (...) {
-				cout << "error";
+				cout << "Something has problem!\n\n";
 			}
 		}
 		else if (n == 9) {
@@ -138,6 +153,46 @@ int main()
 				set_play.find_playlist_print_info(id_pl);
 			}
 		}
+		else if (n == 13) {
+			int id_m;
+			int id_pl;
+			cout << "Enter ID of music : ";
+			cin >> id_m;
+			cout << "Enter ID of PlayList : ";
+			cin >> id_pl;
+			set_play.find_amusic_print_play(playlists, count_playlists, id_m ,id_pl);
+		}
+		else if (n == 14) {
+			int id_m;
+			int id_pl;
+			cout << "Enter ID of music : ";
+			cin >> id_m;
+			cout << "Enter ID of PlayList : ";
+			cin >> id_pl;
+			set_play.delete_musicFrom_play(playlists, count_playlists, id_m, id_pl);
+		}
+		else if (n == 15) {
+			int id_pl;
+			cout << "Enter ID of PlayList : ";
+			cin >> id_pl;
+			PlayList ky = set_play.find_playlist_return(id_pl);
+			queue.Push(ky);
+			cout << "";
+		}
+
+		else if (n == 16) {
+			try {
+				queue.Pop();
+			}
+			catch (...) {
+				cout << "Queue is Empty ! \n\n";
+			}		
+		}
+
+		else if (n == 17) {
+			queue.Display();
+		}
+
 		else if (n == 50) {
 			break;
 		}

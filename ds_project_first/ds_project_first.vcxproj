@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="ds_project_first.cpp" />
     <ClCompile Include="LinkList.cpp" />
+    <ClCompile Include="myQueue.cpp" />
     <ClCompile Include="PlayList.cpp" />
     <ClCompile Include="Singer.cpp" />
     <ClCompile Include="Song.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkList.h" />
+    <ClInclude Include="myQueue.h" />
     <ClInclude Include="PlayList.h" />
     <ClInclude Include="Singer.h" />
     <ClInclude Include="Song.h" />
