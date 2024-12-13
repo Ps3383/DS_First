@@ -2,8 +2,10 @@
 #include<iostream>
 #include"LinkList.h"
 #include"Singer.h"
-
 using namespace std;
+
+int partition(Song* songs, int low, int high);
+void quick_sort(Song* songs, int low, int high);
 
 template <typename T>
 class SparseSet {
@@ -19,7 +21,6 @@ public:
     void insert(T *singer);
     void erase(T* singers[] , int id);
     bool valid(int id) const;
-    //T* get(int id) const;
     void print_all_singers() const;
     void find_singer_print_info(int id) const;
     void clear();
@@ -29,6 +30,7 @@ public:
     T* find_playlist_byID(T* playlists[], int numbers, int id);
     Song findAmusic_forAddtoPlaylist(T* playlists[], int numbers, int id);
     void print_all_playlists() const;
+    void print_one_playlist(int id)const;
     void find_amusic_print_play(T* playlists[], int numbers, int id , int idp);
     void find_playlist_print_info(int id) const;
     void delete_musicFrom_play(T* playlists[], int numbers, int idm, int ids);
@@ -190,13 +192,22 @@ void SparseSet<T>::delete_music(T* singers[], int numbers, int idm , int ids) {
 
 template <typename T>
 T* SparseSet<T>::find_playlist_byID(T* playlists[], int numbers, int id) {
-    for (int i = 0; i < numbers; ++i) {
-        if (playlists[i]->get_id() == id) {
-            return playlists[i];
+    int low = 0;
+    int high = numbers-1;
+    while (low <= high) {
+        int middle = (low + high) / 2;
+        if (playlists[middle]->get_id() == id) {
+            return playlists[middle];
+        }
+        else if (playlists[middle]->get_id() < id) {
+            low = middle + 1;
+        }
+        else {
+            high = middle - 1; 
         }
     }
-    cout << "PlayList with ID = " << id << " does not exist ! \n";
-    cout << "Unsuccessful to add this Music to PlayList ):\n\n";
+    cout << "PlayList with ID = " << id << " does not exist ! \n\n";
+    //cout << "Unsuccessful to add this Music to PlayList ):\n\n";
     return nullptr;
 }
 
@@ -254,13 +265,14 @@ void SparseSet<T>::print_all_playlists() const {
     }
     puts("");
 }
-
-
-
 template <typename T>
-void SparseSet<T>::find_playlist_print_info(int id) const {
-    int index = sparse[id];
+void SparseSet<T>::print_one_playlist(int id) const {
+    if (id > maxID || !valid(id)) {
+        cout << "PlayList with ID = " << id << " does not exist\n\n";
+        return;
+    }
     if (valid(id)) {
+        int index = sparse[id];
         puts("");
         cout << *dense[index] << endl;
         if (dense[index]->get_songs().empty()) {
@@ -268,6 +280,48 @@ void SparseSet<T>::find_playlist_print_info(int id) const {
         }
         else {
             dense[index]->get_songs().display();
+        }   
+        puts("");
+    }
+
+    else {
+        cout << "PlayList with ID = " << id << " does not exist\n\n";
+    }
+}
+
+
+template <typename T>
+void SparseSet<T>::find_playlist_print_info(int id) const {
+    if (id > maxID || !valid(id)) {
+        cout << "PlayList with ID = " << id << " does not exist\n\n";
+        return;
+    }
+    if (valid(id)) {
+        int index = sparse[id];
+        puts("");
+        cout << *dense[index] << endl;
+        if (dense[index]->get_songs().empty()) {
+            cout << "this playlist does not have any songs ):\n";
+        }
+        else {
+             LinkedList<Song> & l = dense[index]->get_songs();
+             int size = l.size_of_list();
+             Song* songArray = new Song[size];
+             for (int i = 0; i < size; ++i) {
+                 songArray[i] = l.index(i);
+             }
+
+             quick_sort(songArray, 0, size - 1);
+
+             cout << "Songs in this playlist (sorted by year):\n";
+             for (int i = 0; i < size; ++i) {
+                 cout << "Song Name : "<<
+                 songArray[i].get_name() 
+                 << "\t "<<"Song Year : " << songArray[i].get_year()
+                    <<"\t " << "Song Text : " << songArray[i].get_text() << endl;
+             }
+             cout << endl;
+             delete[] songArray; 
         }
     }
     else {
@@ -300,13 +354,10 @@ void SparseSet<T>::delete_musicFrom_ALLplay(T* playlists[], int numbers, int idm
             Song& s = l.index(j);
             if (s.get_id() == idm) {
                 l.erase_index(j);
-                //cout << "Music with ID = " << idm << " has been deleted\n\n";               
             }
         }
     }
-    //cout << "Music with ID = " << idm << " or PlayList with ID = " << idp << " does not exist\n\n";
 }
-
 
 template <typename T>
 T& SparseSet<T>::find_playlist_return(int id) {
@@ -316,5 +367,28 @@ T& SparseSet<T>::find_playlist_return(int id) {
     }
     else {
         cout << "PlayList with ID = " << id << " does not exist\n\n";
+    }
+}
+
+
+
+int partition(Song* songs, int low, int high) {
+    int pivotYear = songs[high].get_year();
+    int i = low - 1;
+
+    for (int j = low; j < high; ++j) {
+        if (songs[j].get_year() <= pivotYear) {
+            ++i;
+            swap(songs[i], songs[j]);
+        }
+    }
+    swap(songs[i + 1], songs[high]);
+    return i + 1;
+}
+void quick_sort(Song* songs, int low, int high) {
+    if (low < high) {
+        int pivotIndex = partition(songs, low, high);
+        quick_sort(songs, low, pivotIndex - 1);
+        quick_sort(songs, pivotIndex + 1, high);
     }
 }
