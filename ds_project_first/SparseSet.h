@@ -37,6 +37,8 @@ public:
     void delete_musicFrom_ALLplay(T* playlists[], int numbers, int idm);
     T& find_playlist_return(int id);
     void find_patternIN_music(T* singers[], int numbers, int idm, int ids, string pat);
+    void count_word_INmusic(T* singers[], int numbers, int idm, int ids, string pat);
+    bool playL_Has_Music(T* playlists[], int ids, int idm);
 };
 
 template <typename T>
@@ -396,6 +398,33 @@ void SparseSet<T>::find_patternIN_music(T* singers[], int numbers, int idm, int 
 }
 
 
+template <typename T>
+void SparseSet<T>::count_word_INmusic(T* singers[], int numbers, int idm, int ids, string pat) {
+    for (int i = 0; i < numbers; ++i) {
+        LinkedList<Song>& l = singers[i]->get_songs();
+        for (int j = 0; j < l.size_of_list(); ++j) {
+            Song& s = l.index(j);
+            if (s.get_id() == idm && singers[i]->get_id() == ids) {
+                int count = s.countOccurrences(pat);
+                cout << "Pattern = [" << pat << "] is repeated "<<count<<" times in this Music" << endl << endl;
+                return;
+            }
+        }
+    }
+    cout << "Music or Singer does not exist !\n\n";
+}
+
+template <typename T>
+bool SparseSet<T>::playL_Has_Music(T* playlists[],int ids , int idm) {
+    LinkedList<Song>& l = playlists[ids]->get_songs();
+     for (int j = 0; j < l.size_of_list(); ++j) {
+         Song& s = l.index(j);
+         if (s.get_id() == idm) {
+             return true;
+         }
+     }
+     return false;
+}
 
 
 int partition(Song* songs, int low, int high) {
