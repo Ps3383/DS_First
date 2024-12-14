@@ -31,17 +31,18 @@ int main()
 			cout << "Press 5 to delete everything !\n";
 			cout << "Press 6 to add new Music \n";
 			cout << "Press 7 to find a Music and print its information\n";
-			cout << "Press 8 to delete a Music \n";
-			cout << "Press 9 to build a PlayList \n";
-			cout << "Press 10 to add a Music to PlayList \n";
-			cout << "Press 11 to show All PlayLists information \n";
-			cout << "Press 12 to find a PlayList and print its information \n";
-			cout << "Press 13 to find a PlayList and prints Musics(Sorted by year) \n";
-			cout << "Press 14 to find a Music in Playlist \n";
-			cout << "Press 15 to delete a Music from Playlist \n";
-			cout << "Press 16 to add a Playlist to Queue (Enqueue) \n";
-			cout << "Press 17 to delete a Playlist from Queue (Dequeue) \n";
-			cout << "Press 18 to see Elements in Queue \n";
+			cout << "Press 8 to find a word in the Music\n";
+			cout << "Press 9 to delete a Music \n";
+			cout << "Press 10 to build a PlayList \n";
+			cout << "Press 11 to add a Music to PlayList \n";
+			cout << "Press 12 to show All PlayLists information \n";
+			cout << "Press 13 to find a PlayList and print its information \n";
+			cout << "Press 14 to find a PlayList and prints Musics(Sorted by year) \n";
+			cout << "Press 15 to find a Music in Playlist \n";
+			cout << "Press 16 to delete a Music from Playlist \n";
+			cout << "Press 17 to add a Playlist to Queue (Enqueue) \n";
+			cout << "Press 18 to delete a Playlist from Queue (Dequeue) \n";
+			cout << "Press 19 to see Elements in Queue \n";
 
 			cout << "Press 50 to exit\n";
 
@@ -91,7 +92,6 @@ int main()
 				string word;
 				bool firstWord = true;
 				cout << "Enter Text of the Music (press Enter twice to finish):" << endl;
-
 				while (true) {
 					char c;
 					string line = "";
@@ -127,6 +127,17 @@ int main()
 				set.find_amusic_print(singers, count_singers, name_music);
 			}
 			else if (n == 8) {
+				int id_m , id_s;
+				cout << "Enter ID of the Music : ";
+				cin >> id_m;
+				cout << "Enter ID of the Singer : ";
+				cin >> id_s;
+				string word;
+				cout << "Enter a word that you want to search in this music : ";
+				cin >> word;
+				set.find_patternIN_music(singers, count_singers, id_m, id_s, word);
+			}
+			else if (n == 9) {
 				try {
 					int id_music, id_singer;
 					cout << "Enter ID of Music : ";
@@ -140,7 +151,7 @@ int main()
 					cout << "Something has problem!\n\n";
 				}
 			}
-			else if (n == 9) {
+			else if (n == 10) {
 				cout << "Enter name of the PlayList : ";
 				string name;
 				cin >> name;
@@ -150,7 +161,7 @@ int main()
 				puts("");
 				++count_playlists;
 			}
-			else if (n == 10) {
+			else if (n == 11) {
 				int id_music;
 				int id_playlist;
 				cout << "Enter ID of music : ";
@@ -164,16 +175,16 @@ int main()
 					cout << "Song successfully added (:\n\n";
 				}
 			}
-			else if (n == 11) {
+			else if (n == 12) {
 				set_play.print_all_playlists();
 			}
-			else if (n == 12) {
+			else if (n == 13) {
 				int id_pl;
 				cout << "Enter ID of PlayList : ";
 				cin >> id_pl;
 				set_play.print_one_playlist(id_pl);
 			}
-			else if (n == 13) {
+			else if (n == 14) {
 				int id_pl;
 				cout << "Enter ID of PlayList : ";
 				cin >> id_pl;
@@ -182,7 +193,7 @@ int main()
 					set_play.find_playlist_print_info(id_pl);
 				}
 			}
-			else if (n == 14) {
+			else if (n == 15) {
 				int id_m;
 				int id_pl;
 				cout << "Enter ID of music : ";
@@ -191,7 +202,7 @@ int main()
 				cin >> id_pl;
 				set_play.find_amusic_print_play(playlists, count_playlists, id_m, id_pl);
 			}
-			else if (n == 15) {
+			else if (n == 16) {
 				int id_m;
 				int id_pl;
 				cout << "Enter ID of music : ";
@@ -200,7 +211,7 @@ int main()
 				cin >> id_pl;
 				set_play.delete_musicFrom_play(playlists, count_playlists, id_m, id_pl);
 			}
-			else if (n == 16) {
+			else if (n == 17) {
 				int id_pl;
 				cout << "Enter ID of PlayList : ";
 				cin >> id_pl;
@@ -209,7 +220,7 @@ int main()
 				cout << "";
 			}
 
-			else if (n == 17) {
+			else if (n == 18) {
 				try {
 					queue.Pop();
 				}
@@ -218,7 +229,7 @@ int main()
 				}
 			}
 
-			else if (n == 18) {
+			else if (n == 19) {
 				queue.Display();
 			}
 

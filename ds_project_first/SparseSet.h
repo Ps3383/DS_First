@@ -36,6 +36,7 @@ public:
     void delete_musicFrom_play(T* playlists[], int numbers, int idm, int ids);
     void delete_musicFrom_ALLplay(T* playlists[], int numbers, int idm);
     T& find_playlist_return(int id);
+    void find_patternIN_music(T* singers[], int numbers, int idm, int ids, string pat);
 };
 
 template <typename T>
@@ -369,6 +370,31 @@ T& SparseSet<T>::find_playlist_return(int id) {
         cout << "PlayList with ID = " << id << " does not exist\n\n";
     }
 }
+
+template <typename T>
+void SparseSet<T>::find_patternIN_music(T* singers[], int numbers, int idm, int ids,string pat) {
+    for (int i = 0; i < numbers; ++i) {
+        LinkedList<Song>& l = singers[i]->get_songs();
+        for (int j = 0; j < l.size_of_list(); ++j) {
+            Song& s = l.index(j);
+            if (s.get_id() == idm && singers[i]->get_id() == ids) {
+                int place = s.find_pattern(pat);
+                if (place!= -1) {
+                    cout << "Pattern = [" << pat <<"] was found at index = " 
+                    << place <<endl<< endl;
+                    return;
+                }
+                else {
+                    cout << "Pattern = ["<< pat<<"] didnt find at music with ID = "
+                       << idm << endl << endl;
+                    return;
+                }
+            }
+        }
+    }
+    cout << "Music or Singer does not exist !\n\n";
+}
+
 
 
 
