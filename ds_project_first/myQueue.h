@@ -119,7 +119,7 @@ bool myQueue<T>::find(const T& item) {
         if (*queue[i] ==item) { 
             return true;
         }
-        i = (+1) % capacity;
+        i = (i+1) % capacity;
     }
     return false; 
 }
