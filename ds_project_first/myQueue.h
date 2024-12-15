@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<iostream>
 using namespace std;
 
@@ -16,6 +16,8 @@ public:
     void Push(T& item);    
     void Pop();           
     void Display();
+    bool find(const T& item);
+    bool operator==(const myQueue<T>& other) const;
 };
 
 template<class T>
@@ -76,6 +78,7 @@ void myQueue<T>::Push(T& item) {
     }
     rear = (rear + 1) % capacity;
     queue[rear] = new T(item);
+    cout << "successfully pushed\n\n";
 }
 
 template<class T>
@@ -85,6 +88,7 @@ void myQueue<T>::Pop() {
         delete queue[frontIndex]; 
         queue[frontIndex] = nullptr;
         front = frontIndex;
+        cout << "Successfully pop\n\n";
     }
     else
         throw "queue is empty";
@@ -103,5 +107,38 @@ void myQueue<T>::Display() {
         i = (i + 1) % capacity;
     }
     cout << endl;
+}
+
+template<class T>
+bool myQueue<T>::find(const T& item) {
+    if (isEmpty()) {
+        return false;
+    }
+    int i = (front+1) %capacity;
+    while (i != (rear+1) %capacity) {
+        if (*queue[i] ==item) { 
+            return true;
+        }
+        i = (+1) % capacity;
+    }
+    return false; 
+}
+
+template<class T>
+bool myQueue<T>::operator==(const myQueue<T>& other) const {
+    if (capacity != other.capacity || rear != other.rear || front != other.front) {
+        return false;
+    }
+    int i = (front+1) % capacity;
+    int j = (other.front +1) % other.capacity;
+
+    while (i != (rear + 1) % capacity) {
+        if (*queue[i] != *other.queue[j]) {
+            return false;
+        }
+        i = (i+1) %capacity;
+        j = (j+1) %other.capacity;
+    }
+    return true;
 }
 

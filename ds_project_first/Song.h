@@ -18,13 +18,12 @@ private:
 	int binarySearch(string pattern) const;
 public:
 	Song(string name = "", int year = -1, string text = "" );
-	//~Song();
 	int get_year();
 	int get_id();
 	string get_text();
 	string get_name();
 	int find_pattern(const string& pattern);
-	int countOccurrences(const string& pattern);
+	int count_pattern(const string& pattern);
 	bool compareSuffix(int i, const string& pattern);
 	friend ostream& operator<<(ostream& os, const Song& song);
 };

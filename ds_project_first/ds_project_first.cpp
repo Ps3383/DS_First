@@ -7,16 +7,8 @@
 #include"myQueue.h"
 using namespace std;
 
-bool isInteger(const string& s) {
-	size_t start = 0;
-	if (s[0] == '-' || s[0] == '+')
-		start = 1;
-	for (size_t i = start; i < s.length(); ++i) {
-		if (!isdigit(s[i]))
-			return false;
-	}
-	return true;
-}
+bool isInteger(const string& s);
+int toInteger(const string& str);
 
 int main()
 {
@@ -34,7 +26,7 @@ int main()
 	while (true) {
 		puts("");
 		cout << "Welcome to this Program\n";
-		cout << "Press 1 to use Menu\n";
+		cout << "Press 1 to use a Menu\n";
 		cout << "Press 2 to use Commands\n";
 		cout << "Press 3 to Exit\n";
 		cin >> x;
@@ -76,16 +68,30 @@ int main()
 					++count_singers;
 				}
 				else if (n == "2") {
-					int del_id = -1;
+					string id;
+					int del_id;
 					cout << "Enter ID of singer that you want to delete : ";
-					cin >> del_id;
-					set.erase(singers, del_id);
+					cin >> id;
+					if (isInteger(id)) {
+						del_id = toInteger(id);
+						set.erase(singers, del_id);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "3") {
+					string id;
 					int show_id = -1;
 					cout << "Enter ID of singer that you want see information : ";
-					cin >> show_id;
-					set.find_singer_print_info(show_id);
+					cin >> id;
+					if (isInteger(id)) {
+						show_id = toInteger(id);
+						set.find_singer_print_info(show_id);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 					puts("");
 				}
 				else if (n == "4") {
@@ -97,45 +103,53 @@ int main()
 				}
 				else if (n == "6") {
 					string music_name;
-					int year = 0;
+					string s_year;
+					int year = -1;
 					string text_s;
 					string artist;
 					cout << "Enter a Music name : ";
 					cin >> music_name;
 					cout << "Enter a year of music : ";
-					cin >> year;
+					cin >> s_year;
 					cin.ignore();
-					string songLyrics = "";
-					string word;
-					bool firstWord = true;
-					cout << "Enter Text of the Music (press Enter twice to finish):" << endl;
-					while (true) {
-						char c;
-						string line = "";
-						while (cin.get(c)) {
-							if (c == '\n') {
+					if (isInteger(s_year)) {
+						year = toInteger(s_year);
+						string songLyrics = "";
+						string word;
+						bool firstWord = true;
+						cout << "Enter Text of the Music (press Enter twice to finish):" << endl;
+						while (true) {
+							char c;
+							string line = "";
+							while (cin.get(c)) {
+								if (c == '\n') {
+									break;
+								}
+								line += c;
+							}
+							if (line.empty()) {
 								break;
 							}
-							line += c;
+							if (!songLyrics.empty()) {
+								songLyrics += "\n";
+							}
+							songLyrics += line;
 						}
-						if (line.empty()) {
-							break;
-						}
-						if (!songLyrics.empty()) {
-							songLyrics += "\n";
-						}
-						songLyrics += line;
-					}
-					text_s = songLyrics;
+						text_s = songLyrics;
 
-					cout << "Enter the Artist of the song : ";
-					cin >> artist;
-					Singer* si = set.find_singer_byname(singers, count_singers, artist);
-					if (si != nullptr) {
-						Song song(music_name, year, text_s);
-						si->get_songs().push_back((song));
-						cout << "Song successfully added (:\n\n";
+						cout << "Enter the Artist_Name of the music : ";
+						cin >> artist;
+						Singer* si = set.find_singer_byname(singers, count_singers, artist);
+						if (si != nullptr) {
+							Song song(music_name, year, text_s);
+							si->get_songs().push_back((song));
+							cout << "Music successfully added (:\n\n";
+						}
 					}
+					else {
+						cout << "Error ! You must enter Integer number for year !\n\n";
+					}
+					
 				}
 				else if (n == "7") {
 					string name_music;
@@ -144,36 +158,60 @@ int main()
 					set.find_amusic_print(singers, count_singers, name_music);
 				}
 				else if (n == "8") {
+					string idm, ids;
 					int id_m, id_s;
 					cout << "Enter ID of the Music : ";
-					cin >> id_m;
+					cin >> idm;
 					cout << "Enter ID of the Singer : ";
-					cin >> id_s;
+					cin >> ids;
 					string word;
 					cout << "Enter a word that you want to search in this music : ";
 					cin >> word;
-					set.find_patternIN_music(singers, count_singers, id_m, id_s, word);
+					if (isInteger(idm) && isInteger(ids)) {
+						id_m = toInteger(idm);
+						id_s = toInteger(ids);
+						set.find_patternIN_music(singers, count_singers, id_m, id_s, word);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "9") {
+					string idm, ids;
 					int id_m, id_s;
 					cout << "Enter ID of the Music : ";
-					cin >> id_m;
+					cin >> idm;
 					cout << "Enter ID of the Singer : ";
-					cin >> id_s;
+					cin >> ids;
 					string word;
-					cout << "Enter a word that you want to see its count : ";
+					cout << "Enter a word that you want to search in this music : ";
 					cin >> word;
-					set.count_word_INmusic(singers, count_singers, id_m, id_s, word);
+					if (isInteger(idm) && isInteger(ids)) {
+						id_m = toInteger(idm);
+						id_s = toInteger(ids);
+						set.count_word_INmusic(singers, count_singers, id_m, id_s, word);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "10") {
 					try {
 						int id_music, id_singer;
+						string idmusic, idsinger;
 						cout << "Enter ID of Music : ";
-						cin >> id_music;
+						cin >> idmusic;
 						cout << "Enter ID of Singer : ";
-						cin >> id_singer;
-						set.delete_music(singers, count_singers, id_music, id_singer);
-						set_play.delete_musicFrom_ALLplay(playlists, count_playlists, id_music);
+						cin >> idsinger;
+						if (isInteger(idsinger) && isInteger(idmusic)) {
+							id_singer = toInteger(idsinger);
+							id_music = toInteger(idmusic);
+							set.delete_music(singers, count_singers, id_music, id_singer);
+							set_play.delete_musicFrom_ALLplay(playlists, count_playlists, id_music);
+						}
+						else {
+							cout << "Error ! You must enter Integer number for ID !\n\n";
+						}
 					}
 					catch (...) {
 						cout << "Something has a problem!\n\n";
@@ -190,22 +228,29 @@ int main()
 					++count_playlists;
 				}
 				else if (n == "12") {
-					int id_music;
-					int id_playlist;
-					cout << "Enter ID of music : ";
-					cin >> id_music;
+					int id_music, id_playlist;
+					string idmusic, idplaylist;
+					cout << "Enter ID of Music : ";
+					cin >> idmusic;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_playlist;
-					Song so = set.findAmusic_forAddtoPlaylist(singers, count_singers, id_music);
-					PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_playlist);
-					if (pl != nullptr && so.get_name() != "null") {
-						if (!set_play.playL_Has_Music(playlists, id_playlist, id_music)) {
-							pl->get_songs().push_back(so);
-							cout << "Song successfully added (:\n\n";
+					cin >> idplaylist;
+					if (isInteger(idplaylist) && isInteger(idmusic)) {
+						id_playlist = toInteger(idplaylist);
+						id_music = toInteger(idmusic);
+						Song so = set.findAmusic_forAddtoPlaylist(singers, count_singers, id_music);
+						PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_playlist);
+						if (pl != nullptr && so.get_name() != "null") {
+							if (!set_play.playL_Has_Music(playlists, id_playlist, id_music)) {
+								pl->get_songs().push_back(so);
+								cout << "Music successfully added (:\n\n";
+							}
+							else {
+								cout << "This Music has added before !\n\n";
+							}
 						}
-						else {
-							cout << "This Song has added before !\n\n";
-						}
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
 					}
 				}
 				else if (n == "13") {
@@ -213,44 +258,87 @@ int main()
 				}
 				else if (n == "14") {
 					int id_pl;
+					string idpl;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_pl;
-					set_play.print_one_playlist(id_pl);
+					cin >> idpl;
+					if (isInteger(idpl)) {
+						id_pl = toInteger(idpl);
+						set_play.print_one_playlist(id_pl);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "15") {
 					int id_pl;
+					string idpl;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_pl;
-					PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_pl);
-					if (pl != nullptr) {
-						set_play.find_playlist_print_info(id_pl);
+					cin >> idpl;
+					if (isInteger(idpl)) {
+						id_pl = toInteger(idpl);
+						PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, id_pl);
+						if (pl != nullptr) {
+							set_play.find_playlist_print_info(id_pl);
+						}
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
 					}
 				}
 				else if (n == "16") {
 					int id_m;
 					int id_pl;
+					string idm, idp;
 					cout << "Enter ID of music : ";
-					cin >> id_m;
+					cin >> idm;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_pl;
-					set_play.find_amusic_print_play(playlists, count_playlists, id_m, id_pl);
+					cin >> idp;
+					if (isInteger(idm) && isInteger(idp)) {
+						id_m = toInteger(idm);
+						id_pl = toInteger(idp);
+						set_play.find_amusic_print_play(playlists, count_playlists, id_m, id_pl);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "17") {
 					int id_m;
 					int id_pl;
+					string idm, idp;
 					cout << "Enter ID of music : ";
-					cin >> id_m;
+					cin >> idm;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_pl;
-					set_play.delete_musicFrom_play(playlists, count_playlists, id_m, id_pl);
+					cin >> idp;
+					if (isInteger(idm) && isInteger(idp)) {
+						id_m = toInteger(idm);
+						id_pl = toInteger(idp);
+						set_play.delete_musicFrom_play(playlists, count_playlists, id_m, id_pl);
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "18") {
 					int id_pl;
+					string idp;
 					cout << "Enter ID of PlayList : ";
-					cin >> id_pl;
-					PlayList ky = set_play.find_playlist_return(id_pl);
-					queue.Push(ky);
-					cout << "";
+					cin >> idp;
+					if (isInteger(idp)) {
+						id_pl = toInteger(idp);
+						PlayList *ky = set_play.find_playlist_return(playlists,count_playlists,id_pl);
+						if (ky != nullptr) {
+							if (!queue.find(*ky)) 
+								queue.Push(*ky);
+							else 
+								cout << "This PlayList has added before!\n\n";
+						}
+						else
+							cout << "PlayList does not exist\n\n";
+					}
+					else {
+						cout << "Error ! You must enter Integer number for ID !\n\n";
+					}
 				}
 				else if (n == "19") {
 					try {
@@ -263,6 +351,7 @@ int main()
 
 				else if (n == "20") {
 					queue.Display();
+					puts("");
 				}
 
 				else if (n == "21") {
@@ -318,18 +407,17 @@ int main()
 						cout << "Something has problem!\n\n";
 					}
 				}
-				else if (command == "adms") {
+				else if (command == "addms") {
 					string musicname;
 					cin >> musicname;
 					string singername;
 					int musicy;
 					cin >> musicy;
 					cin.ignore();
+					cout << "Enter Text of the Music (press Enter twice to finish):" << endl;
 					string songLyrics = "";
 					string word;
 					bool firstWord = true;
-					cout << "Enter Text of the Music (press Enter twice to finish):" << endl;
-
 					while (true) {
 						char c;
 						string line = "";
@@ -356,7 +444,7 @@ int main()
 					if (si != nullptr) {
 						Song song(musicname, musicy, argument);
 						si->get_songs().push_back((song));
-						cout << "Song successfully added (:\n\n";
+						cout << "Music successfully added (:\n\n";
 					}
 				}
 				else if (command == "search") {
@@ -389,8 +477,13 @@ int main()
 					Song so = set.findAmusic_forAddtoPlaylist(singers, count_singers, number);
 					PlayList* pl = set_play.find_playlist_byID(playlists, count_playlists, number1);
 					if (pl != nullptr && so.get_name() != "null") {
-						pl->get_songs().push_back(so);
-						cout << "Song successfully added (:\n\n";
+						if (!set_play.playL_Has_Music(playlists, number1, number)) {
+							pl->get_songs().push_back(so);
+							cout << "Music successfully added (:\n\n";
+						}
+						else {
+							cout << "This Music has added before !\n\n";
+						}
 					}
 				}
 				else if (command == "searchp") {
@@ -416,9 +509,15 @@ int main()
 				}
 				else if (command == "addqp") {
 					cin >> number;
-					PlayList ky = set_play.find_playlist_return(number);
-					queue.Push(ky);
-					cout << "";
+					PlayList* ky = set_play.find_playlist_return(playlists, count_playlists, number);
+					if (ky != nullptr) {
+						if (!queue.find(*ky))
+							queue.Push(*ky);
+						else
+							cout << "This PlayList has added before!\n\n";
+					}
+					else
+						cout << "PlayList does not exist\n\n";
 				}
 				else if (command == "pop") {
 					try {
@@ -448,3 +547,32 @@ int main()
 	}
 }
 
+
+
+bool isInteger(const string& s) {
+	size_t start = 0;
+	if (s[0] == '-' || s[0] == '+')
+		start = 1;
+	for (size_t i = start; i < s.length(); ++i) {
+		if (!isdigit(s[i]))
+			return false;
+	}
+	return true;
+}
+int toInteger(const string& str) {
+	int result = 0, sign = 1;
+	int i = 0;
+
+	if (str[0] == '-') {
+		sign = -1;
+		i++;
+	}
+	else if (str[0] == '+') {
+		i++;
+	}
+	for (; i < str.size(); i++) {
+		result = result * 10 + (str[i] - '0');
+	}
+
+	return sign * result;
+}

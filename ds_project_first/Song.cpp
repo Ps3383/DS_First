@@ -2,21 +2,7 @@
 
 int Song:: number_so = 0;
 
-string customSubstr(string str, int pos, int len) {
-    if (pos >= str.size()) {
-        return "";
-    }
-    if (pos + len > str.size()) {
-        len = str.size() - pos;
-    }
-    string result;
-    for (int i = pos; i < pos + len; ++i) {
-        result += str[i];
-    }
-    return result;
-}
-
-
+string customSubstr(string str, int pos, int len);
 
 Song::Song(string name, int year, string text) {
 	Name = name;
@@ -52,33 +38,33 @@ string Song::get_text() {
 }
 
 int Song::compareSuffix(int i, int j) {
-    while (i < n && j < n) {
-        if (Text[i] < Text[j])
+    while (i<n && j<n) {
+        if (Text[i]<Text[j])
             return -1;
         if (Text[i] > Text[j])
             return 1;
         i++;
         j++;
     }
-    return (j == n) - (i == n);
+    return (j==n) - (i==n);
 }
 
 void Song::quickSort(int left, int right) {
     if (left >=right) 
         return;
-    int pivotIndex = left;
-    int pivotValue = suffixArray[pivotIndex];
-    int i = left + 1;
-    int j = right;
+    int pivotIndex =left;
+    int pivotValue =suffixArray[pivotIndex];
+    int i = left+1;
+    int j =right;
 
     while (i <= j) {
-        while (i <=j && compareSuffix(suffixArray[i], pivotValue)< 0)
+        while (i <=j && compareSuffix(suffixArray[i],pivotValue)< 0)
             i++;
-        while (i <=j && compareSuffix(suffixArray[j], pivotValue)> 0)
+        while (i <=j && compareSuffix(suffixArray[j],pivotValue)> 0)
             j--;
 
         if (i <=j) {
-            swap(suffixArray[i], suffixArray[j]);
+            swap(suffixArray[i],suffixArray[j]);
             i++;
             j--;
         }
@@ -98,10 +84,10 @@ void Song::buildSuffixArray() {
 
 int Song::binarySearch(string pattern) const {
     int m = pattern.size();
-    int low = 0,high = n-1;
+    int low = 0,high =n-1;
 
     while (low <= high) {
-        int mid = (low + high) / 2;
+        int mid = (low + high)/2;
         int start = suffixArray[mid];
         string suffix = customSubstr(Text, start, m);
 
@@ -128,13 +114,13 @@ bool Song::compareSuffix(int i, const string& pattern) {
     if (suffixArray[i] + m > n) {
         return false;
     }
-    if (customSubstr(Text,suffixArray[i], m) == pattern)
+    if (customSubstr(Text,suffixArray[i], m) ==pattern)
         return true;
     else 
         return false;
 }
 
-int Song::countOccurrences(const string& pattern) {
+int Song::count_pattern(const string& pattern) {
     int count = 0;
     for (int i = 0; i < n; ++i) {
         if (compareSuffix(i, pattern)) {
@@ -146,6 +132,22 @@ int Song::countOccurrences(const string& pattern) {
 
 
 ostream& operator<<(ostream& os, const Song& song) {
-    os << "Song [ID: " << song.ID << ", Name: " << song.Name << ", Year: " << song.Year << ", Text: " << song.Text << "]";
+    os << "Music [ID: " << song.ID << ", Name: " << song.Name << ", Year: " << song.Year << ", Text: " << song.Text << "]";
     return os;
+}
+
+
+
+string customSubstr(string str, int pos, int len) {
+    if (pos >= str.size()) {
+        return "";
+    }
+    if (pos + len > str.size()) {
+        len = str.size() - pos;
+    }
+    string result;
+    for (int i = pos; i < pos + len; ++i) {
+        result += str[i];
+    }
+    return result;
 }

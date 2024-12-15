@@ -3,9 +3,9 @@
 int PlayList::number_playlist = 1000;
 
 PlayList::PlayList(string name) {
-	Name = name;
-	ID = number_playlist;
-	this->number_playlist += 2;
+		Name = name;
+		ID = number_playlist;
+		this->number_playlist += 2;
 }
 
 int PlayList::get_id() {
@@ -18,4 +18,13 @@ string PlayList::get_name() {
 
 LinkedList<Song>& PlayList::get_songs() {
 	return this->songs;
+}
+
+bool PlayList::operator==(const PlayList& other) const {
+	return (ID == other.ID);
+}
+
+ostream& operator<<(ostream& os, const PlayList& playlist) {
+	os << "PlayList [ID: " << playlist.ID << ", Name: " << playlist.Name << "]";
+	return os;
 }

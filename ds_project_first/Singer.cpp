@@ -21,3 +21,9 @@ string Singer::get_name() {
 LinkedList<Song>& Singer::get_songs() {
 	return this->songs;
 }
+
+
+ostream& operator<<(ostream& os, const Singer& singer) {
+	os << "Singer [ID: " << singer.ID << ", Name: " << singer.Name << "]";
+	return os;
+}

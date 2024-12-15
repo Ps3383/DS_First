@@ -16,10 +16,8 @@ public:
 	string get_name();
 	int get_id();
 	LinkedList<Song>& get_songs();
-	friend ostream& operator<<(ostream& os, const PlayList& playlist) {
-		os << "PlayList [ID: " << playlist.ID << ", Name: " << playlist.Name << "]";
-		return os;
-	}
+	friend ostream& operator<<(ostream& os, const PlayList& playlist);
+	bool operator==(const PlayList& other) const;
 };
 
 
